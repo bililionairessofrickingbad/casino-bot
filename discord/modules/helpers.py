@@ -4,7 +4,9 @@ from pathlib import Path
 
 import yaml
 from discord import Color, Embed
-
+from os import getenv
+from dotenv import load_dotenv
+load_dotenv()
 
 class InsufficientFundsException(Exception):
     def __init__(self, current, bet) -> None:
@@ -22,7 +24,7 @@ with open(os.path.join(ABS_PATH.parent, 'config.yml'),  # type:ignore
             'r', encoding='utf-8') as f:
     config = yaml.safe_load(f.read()).get('bot', {})
 
-TOKEN = config.get('token')
+TOKEN = getenv('TOKEN')
 PREFIX = config.get('prefix', '$')
 OWNER_IDS = config.get('owner_ids')
 DEFAULT_BET = config.get('default_bet', 100)

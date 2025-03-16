@@ -201,5 +201,5 @@ class Blackjack(commands.Cog):
         )
         os.remove(f'./{ctx.author.id}.png')
 
-def setup(client: commands.Bot):
-    client.add_cog(Blackjack(client))
+async def setup(client: commands.Bot):
+    await client.add_cog(Blackjack(client))

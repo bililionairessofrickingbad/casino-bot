@@ -69,5 +69,5 @@ class GamblingHelpers(commands.Cog, name='General'):
             )
         await ctx.send(embed=embed)
 
-def setup(client: commands.Bot):
-    client.add_cog(GamblingHelpers(client))
+async def setup(client: commands.Bot):
+    await client.add_cog(GamblingHelpers(client))

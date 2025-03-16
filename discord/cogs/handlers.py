@@ -59,5 +59,5 @@ class Handlers(commands.Cog, name='handlers'):
         else:
             raise error
 
-def setup(client: commands.Bot):
-    client.add_cog(Handlers(client))
+async def setup(client: commands.Bot):
+    await client.add_cog(Handlers(client))

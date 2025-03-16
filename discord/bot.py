@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 from modules.helpers import *
-
+import asyncio
 
 client = commands.Bot(
     command_prefix=PREFIX,
@@ -11,8 +11,13 @@ client = commands.Bot(
 
 client.remove_command('help')
 
-for filename in os.listdir(COG_FOLDER):
-    if filename.endswith('.py'):
-        client.load_extension(f'cogs.{filename[:-3]}')
+async def load_extensions():
+    for filename in os.listdir(COG_FOLDER):
+        if filename.endswith('.py'):
+            await client.load_extension(f'cogs.{filename[:-3]}')
 
-client.run(TOKEN)
+async def main():
+    await load_extensions()
+    await client.start(TOKEN)
+
+asyncio.run(main())

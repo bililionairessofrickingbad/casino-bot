@@ -68,5 +68,5 @@ class Gambling(commands.Cog):
         else:
             raise BadArgument()
 
-def setup(client: commands.Bot):
-    client.add_cog(Gambling(client))
+async def setup(client: commands.Bot):
+    await client.add_cog(Gambling(client))

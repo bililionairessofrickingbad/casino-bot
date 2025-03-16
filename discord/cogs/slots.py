@@ -16,14 +16,14 @@ class Slots(commands.Cog):
 
     def check_bet(self, ctx: commands.Context, bet: int=DEFAULT_BET):
         bet = int(bet)
-        if bet <= 0 or bet > 3:
+        if bet <= 0 or bet > 1000:
             raise commands.errors.BadArgument()
         current = self.economy.get_entry(ctx.author.id)[2]
         if bet > current:
             raise InsufficientFundsException(current, bet)
 
     @commands.command(
-        brief='Slot machine\nbet must be 1-3',
+        brief='Slot machine\nbet must be 1-1000',
         usage='slots *[bet]'
     )
     async def slots(self, ctx: commands.Context, bet: int=1):
@@ -40,7 +40,7 @@ class Slots(commands.Cog):
         s2 = random.randint(1, items-1)
         s3 = random.randint(1, items-1)
 
-        win_rate = 12/100
+        win_rate = 98/100
 
         if random.random() < win_rate:
             symbols_weights = [3.5, 7, 15, 25, 55] # 
@@ -59,7 +59,7 @@ class Slots(commands.Cog):
         for i in range(1, (item//speed)+1):
             bg = Image.new('RGBA', facade.size, color=(255,255,255))
             bg.paste(reel, (25 + rw*0, 100-(speed * i * s1)))
-            bg.paste(reel, (25 + rw*1, 100-(speed * i * s2))) # dont ask me why this works, but it took me hours
+            bg.paste(reel, (25 + rw*1, 100-(speed * i * s2))) 
             bg.paste(reel, (25 + rw*2, 100-(speed * i * s3)))
             bg.alpha_composite(facade)
             images.append(bg)
@@ -68,8 +68,8 @@ class Slots(commands.Cog):
         images[0].save(
             fp,
             save_all=True,
-            append_images=images[1:], # append all images after first to first
-            duration=50  # duration of each slide (ms)
+            append_images=images[1:],
+            duration=50 
         )
 
         # win logic
@@ -134,5 +134,5 @@ class Slots(commands.Cog):
             self.economy.add_money(user_id, amount_to_sell*DEFAULT_BET)
         await ctx.invoke(self.client.get_command('money'))
 
-def setup(client: commands.Bot):
-    client.add_cog(Slots(client))
+async def setup(client: commands.Bot):
+    await client.add_cog(Slots(client))
